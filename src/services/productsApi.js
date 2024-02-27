@@ -11,65 +11,34 @@ export const productsApi = createApi({
   }),
   tagTypes: ["Products"],
   endpoints: build => ({
-    getProductsIds: build.mutation({
-      query: params => ({
+    getEntitiesByAction: build.mutation({
+      query: ({ action, params }) => ({
         url: "/",
         method: "POST",
         body: {
-          action: "get_ids",
+          action,
           params,
         },
       }),
       transformErrorResponse: responseError => responseError.data,
-      transformResponse: response => response.result,
-    }),
-    getProducts: build.mutation({
-      query: params => ({
-        url: "/",
-        method: "POST",
-        body: {
-          action: "get_items",
-          params,
-        },
-      }),
-      transformErrorResponse: responseError => responseError.data,
-      transformResponse: response => {
-        const existingIds = [];
-        return response.result.filter(product => {
-          if (!existingIds.includes(product.id)) {
-            existingIds.push(product.id);
-            return true;
-          }
-        });
+      transformResponse: (response, meta, args) => {
+        if (args.action === "get_ids") {
+          return [...new Set(response.result)];
+        }
+        if (args.action === "get_items") {
+          const existingIds = [];
+          return response.result.filter(product => {
+            if (!existingIds.includes(product.id)) {
+              existingIds.push(product.id);
+              return true;
+            }
+            return null;
+          });
+        }
+        return response.result;
       },
-    }),
-    getFields: build.mutation({
-      query: () => ({
-        url: "/",
-        method: "POST",
-        body: {
-          action: "get_fields",
-          params: { field: "price" },
-        },
-      }),
-    }),
-    getFilteredProducts: build.mutation({
-      query: () => ({
-        url: "/",
-        method: "POST",
-        body: {
-          action: "filter",
-          params: { price: 17500 },
-        },
-      }),
-      // transformErrorResponse: responseError => responseError.data
     }),
   }),
 });
 
-export const {
-  useGetFilteredProductsMutation,
-  useGetProductsIdsMutation,
-  useGetProductsMutation,
-  useGetFieldsMutation,
-} = productsApi;
+export const { useGetEntitiesByActionMutation } = productsApi;
