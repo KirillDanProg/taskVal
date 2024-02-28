@@ -1,0 +1,29 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 60px;
+  padding: 0 30px;
+
+  &.disabled {
+    .arrowBack {
+      opacity: 0.4;
+    }
+  }
+
+  svg {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    transition: 0.4s;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
+  }
+}
