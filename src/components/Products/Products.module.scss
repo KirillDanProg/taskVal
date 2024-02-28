@@ -1,0 +1,43 @@
+@use "@/styles/mixins" as *;
+
+.productsContainer {
+  @include lg-up {
+    align-items: flex-start;
+    justify-content: start;
+  }
+
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-evenly;
+
+  .card {
+    flex: 1 0 250px;
+
+    max-width: 320px;
+    padding: 0.4em;
+
+    background: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+
+    .cardFooter {
+      display: flex;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .textTitle {
+      font-weight: 900;
+      line-height: 1.5;
+    }
+
+    .cardInfo {
+      .textBody {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
