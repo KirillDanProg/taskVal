@@ -47,6 +47,7 @@ export const productsApi = createApi({
           params,
         },
       }),
+      transformErrorResponse: responseError => responseError.data,
       transformResponse: response => response.result,
     }),
   }),
