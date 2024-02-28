@@ -1,6 +1,7 @@
 import s from "./Filter.module.scss";
-import { FilterInput } from "./FilterInput/FilterInput";
-import { FilterSelect } from "./FilterSelect/FilterSelect";
+import { FilterInput } from "./FilterSearchInput/FilterInput";
+import { FilterSelect } from "./FilterBrandSelect/FilterSelect";
+import { PriceInput } from "./FilterPriceInput/PriceInput";
 
 export function Filter() {
   const onSubmitHandler = e => {
@@ -12,6 +13,7 @@ export function Filter() {
       <form onSubmit={onSubmitHandler} className={s.form}>
         <FilterSelect />
         <FilterInput />
+        <PriceInput />
       </form>
     </div>
   );
