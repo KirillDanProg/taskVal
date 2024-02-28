@@ -38,7 +38,18 @@ export const productsApi = createApi({
         return response.result;
       },
     }),
+    getFields: build.mutation({
+      query: params => ({
+        url: "/",
+        method: "POST",
+        body: {
+          action: "get_fields",
+          params,
+        },
+      }),
+      transformResponse: response => response.result,
+    }),
   }),
 });
 
-export const { useGetEntitiesByActionMutation } = productsApi;
+export const { useGetEntitiesByActionMutation, useGetFieldsMutation } = productsApi;
