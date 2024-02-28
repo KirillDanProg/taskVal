@@ -33,7 +33,7 @@ export const useGetProducts = () => {
       }
     };
     getProductsByIdsHandler();
-  }, [error, ...Object.values(filterParams)]);
+  }, [error, offset, ...Object.values(filterParams)]);
 
   return { data: isProducts ? data : undefined, isLoading, error };
 };
