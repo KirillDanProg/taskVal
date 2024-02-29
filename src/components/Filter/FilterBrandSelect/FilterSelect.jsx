@@ -1,12 +1,16 @@
-import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useGetFieldsMutation } from "@/services/productsApi";
-import s from "./FilterSelect.module.scss";
+import { useQueryParams } from "@/hooks/useQueryParams";
+import { useResetFilterValue } from "@/hooks/useResetFilterValue";
 
 export function FilterSelect() {
-  const [fields, setFields] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [getFields] = useGetFieldsMutation();
+  const { searchParams, setParam, deleteParam } = useQueryParams();
+  const brand = searchParams.get("brand") || "";
+  const [brandValue, setBrandValue] = useState(brand);
+  const [fields, setFields] = useState([]);
+
+  useResetFilterValue(brand, setBrandValue); //reset select value if url param deleted
 
   useEffect(() => {
     (async () => {
@@ -14,23 +18,23 @@ export function FilterSelect() {
       const filteredBrands = [...new Set(brands?.filter(value => value !== null))];
       setFields(filteredBrands);
     })();
-  }, []);
+  }, []); //getting all brands for select
 
   const onBrandChange = e => {
     const value = e.target.value;
+    setBrandValue(value);
     if (value === "Все") {
-      searchParams.delete("brand");
+      deleteParam("brand");
     } else {
-      searchParams.set("brand", value);
+      setParam("brand", value);
     }
-    setSearchParams(searchParams);
   };
 
   return (
-    <div className={s.filterSelect}>
+    <div>
       <label htmlFor="brands">Брэнды:</label>
-      <select onChange={onBrandChange} name="brands" id="brands">
-        <option value={null}>Все</option>
+      <select value={brandValue} onChange={onBrandChange} name="brands" id="brands">
+        <option value="">Все</option>
         {fields.map(brand => (
           <option key={brand} value={brand}>
             {brand}
