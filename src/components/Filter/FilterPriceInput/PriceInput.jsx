@@ -1,34 +1,45 @@
-import { useSelector } from "react-redux";
-import { selectPrice } from "@/services/filterProducts/filterSelectors";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useEffect } from "react";
-import s from "./PriceInput.module.scss";
+import { useEffect, useState } from "react";
+import { useResetFilterValue } from "@/hooks/useResetFilterValue";
 
 export function PriceInput() {
-  const price = useSelector(selectPrice);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchParams, setParam, deleteParam } = useQueryParams();
+  const price = Number(searchParams.get("price"));
   const [priceValue, setPriceValue] = useState(price);
   const debouncedValue = useDebounce(priceValue, 500);
 
   useEffect(() => {
     if (!debouncedValue) {
-      searchParams.delete("price");
+      deleteParam("price");
     } else {
-      searchParams.set("price", debouncedValue);
+      setParam("price", debouncedValue);
     }
-    setSearchParams(searchParams);
   }, [debouncedValue]);
+
+  useResetFilterValue(price, setPriceValue); // сбрасываем значение инпута если url параметр удален
 
   const onChangeHandler = e => {
     const value = e.target.value;
-    setPriceValue(value);
+    setPriceValue(+value);
   };
+  const onFocusHandler = e => {
+    if (+e.target.value < 1) {
+      e.target.value = "";
+    }
+  };
+
   return (
-    <div className={s.priceInput}>
+    <div>
       <label>Цена:</label>
-      <input type="number" name="price" value={priceValue} onChange={onChangeHandler} />
+      <input
+        type="number"
+        name="price"
+        value={priceValue}
+        onChange={onChangeHandler}
+        onFocus={onFocusHandler}
+        onBlur={e => (e.target.value = price)}
+      />
     </div>
   );
 }
