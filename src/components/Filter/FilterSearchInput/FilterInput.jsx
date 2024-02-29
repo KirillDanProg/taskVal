@@ -1,30 +1,29 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { selectProductQuery } from "@/services/filterProducts/filterSelectors";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import s from "./FilterInput.module.scss";
-import { useEffect } from "react";
+import { useQueryParams } from "@/hooks/useQueryParams";
+import { useResetFilterValue } from "@/hooks/useResetFilterValue";
 
 export function FilterInput() {
-  const productQuery = useSelector(selectProductQuery);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchParams, setParam, deleteParam } = useQueryParams();
+  const productQuery = searchParams.get("product") || "";
   const [searchValue, setSearchValue] = useState(productQuery);
   const debouncedValue = useDebounce(searchValue, 500);
 
+  useResetFilterValue(productQuery, setSearchValue); //reset input value if url param deleted
+
   useEffect(() => {
     if (!debouncedValue) {
-      searchParams.delete("product");
+      deleteParam("product");
     } else {
-      searchParams.set("product", debouncedValue);
+      setParam("product", debouncedValue);
     }
-    setSearchParams(searchParams);
   }, [debouncedValue]);
 
   const onChangeHandler = e => {
     const value = e.target.value;
     setSearchValue(value);
   };
+
   return (
     <div>
       <label>Название товара:</label>
@@ -32,7 +31,8 @@ export function FilterInput() {
         name="product"
         value={searchValue}
         onChange={onChangeHandler}
-        className={s.searchInput}
+        placeholder="Введите название..."
+        autoComplete="off"
       />
     </div>
   );
