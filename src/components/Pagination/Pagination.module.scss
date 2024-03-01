@@ -3,12 +3,13 @@
   align-items: center;
   justify-content: space-between;
 
+  width: 100%;
   height: 60px;
-  padding: 0 30px;
+  margin-top: 30px;
 
   &.disabled {
     .arrowBack {
-      opacity: 0.4;
+      opacity: 0.5;
     }
   }
 
@@ -17,6 +18,10 @@
     width: 30px;
     height: 30px;
     transition: 0.4s;
+
+    path {
+      fill: var(--color-accent-300);
+    }
 
     &:hover {
       transform: scale(1.2);
