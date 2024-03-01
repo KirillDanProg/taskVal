@@ -1,0 +1,49 @@
+@use "@/styles/mixins" as *;
+
+.filterContainer {
+  @include md-up {
+    gap: 24px;
+    margin: 40px 0;
+  }
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  width: 100%;
+  margin-bottom: 24px;
+
+  label {
+    display: block;
+
+    margin-bottom: 0.3rem;
+
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-light-900);
+
+    transition: color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+  }
+
+  input,
+  select {
+    min-width: 260px;
+    height: 44px;
+    padding: 0 1rem;
+
+    font-size: var(--font-size-m);
+    color: var(--color-dark-500);
+
+    border: 2px solid var(--color-accent-700);
+    border-radius: 0.5rem;
+
+    transition: border-color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+      color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+
+    &:hover,
+    &:focus {
+      border-color: var(--color-accent-100);
+      outline: none;
+    }
+  }
+}
