@@ -3,7 +3,7 @@ import { genAuthorizedQuery } from "@/utils/genAuthorizedQuery";
 
 export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://api.valantis.store:40000",
+    baseUrl: "/api",
     prepareHeaders: headers => {
       headers.set("X-Auth", genAuthorizedQuery());
       return headers;
