@@ -5,7 +5,7 @@ import ArrowRight from "@/assets/icons/arrow-right.svg?react";
 import ArrowLeft from "@/assets/icons/arrow-left.svg?react";
 import s from "./Pagination.module.scss";
 
-export function Pagination({ isLoading }) {
+export function Pagination({ isLoading, isMore }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const offset = useSelector(selectOffset);
 
@@ -15,7 +15,7 @@ export function Pagination({ isLoading }) {
   };
 
   const disabled = offset === 0 || isLoading;
-
+  const nextDisabled = isLoading || !isMore;
   return (
     <div className={`${s.pagination} ${disabled ? s.disabled : ""}`}>
       <button
@@ -25,7 +25,7 @@ export function Pagination({ isLoading }) {
       >
         <ArrowLeft />
       </button>
-      <button disabled={isLoading} onClick={() => setOffsetHandler(+offset + 50)}>
+      <button disabled={nextDisabled} onClick={() => setOffsetHandler(+offset + 50)}>
         <ArrowRight />
       </button>
     </div>
