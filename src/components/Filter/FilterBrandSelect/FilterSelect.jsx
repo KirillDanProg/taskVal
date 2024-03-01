@@ -4,7 +4,7 @@ import { useQueryParams } from "@/hooks/useQueryParams";
 import { useResetFilterValue } from "@/hooks/useResetFilterValue";
 
 export function FilterSelect() {
-  const [getFields] = useGetFieldsMutation();
+  const [getFields, { error }] = useGetFieldsMutation();
   const { searchParams, setParam, deleteParam } = useQueryParams();
   const brand = searchParams.get("brand") || "";
   const [brandValue, setBrandValue] = useState(brand);
@@ -18,7 +18,7 @@ export function FilterSelect() {
       const filteredBrands = [...new Set(brands?.filter(value => value !== null))];
       setFields(filteredBrands);
     })();
-  }, []); //getting all brands for select
+  }, [error]); //getting all brands for select
 
   const onBrandChange = e => {
     const value = e.target.value;
