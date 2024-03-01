@@ -7,7 +7,7 @@ export function FilterInput() {
   const { searchParams, setParam, deleteParam } = useQueryParams();
   const productQuery = searchParams.get("product") || "";
   const [searchValue, setSearchValue] = useState(productQuery);
-  const debouncedValue = useDebounce(searchValue, 500);
+  const debouncedValue = useDebounce(searchValue, 800);
 
   useResetFilterValue(productQuery, setSearchValue); //reset input value if url param deleted
 
@@ -15,13 +15,15 @@ export function FilterInput() {
     if (!debouncedValue) {
       deleteParam("product");
     } else {
-      setParam("product", debouncedValue);
+      setParam("product", debouncedValue.trim());
     }
   }, [debouncedValue]);
 
   const onChangeHandler = e => {
     const value = e.target.value;
-    setSearchValue(value);
+    if (value.trim() || value === "") {
+      setSearchValue(value);
+    }
   };
 
   return (
