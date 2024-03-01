@@ -7,7 +7,7 @@ export const useGetProducts = () => {
   const [getEntities, { data, error, isLoading, originalArgs }] = useGetEntitiesByActionMutation();
   const { limit, offset, ...filterParams } = useSelector(selectParams);
   const dependencies = Object.values(filterParams); //deps to trigger effect if url params changed
-  const isProducts = originalArgs?.action === "get_items"; //isProducts flag need to return data only when items received
+  const isProducts = originalArgs?.action === "get_items"; //isProducts: flag to return data only when items received
 
   useEffect(() => {
     (async () => {
@@ -17,6 +17,7 @@ export const useGetProducts = () => {
       const paramsEntries = Object.entries(filterParams).filter(([key]) => filterParams[key]);
       if (paramsEntries.length) {
         params = Object.fromEntries(paramsEntries);
+        params["offset"] = offset;
         action = "filter";
       } // reasign action and params if there is an url param
 
