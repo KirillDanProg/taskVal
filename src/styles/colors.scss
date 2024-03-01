@@ -1,7 +1,7 @@
 :root {
   // accent
   --color-accent-100: #bea6ff;
-  --color-accent-300: #a280ff;
+  --color-accent-300: rgb(165 40 56);
   --color-accent-700: #704ecc;
   --color-accent-900: #382766;
 
@@ -16,13 +16,11 @@
   --color-danger-500: #cc1439;
 
   // warning
-  --color-warning-100: #ffd073;
-  --color-warning-300: #e5ac39;
-  --color-warning-500: #d99000;
+  --color-warning-300: #d8b55b;
 
   // light
   --color-light-100: #fff;
-  --color-light-500: #f4f2fa;
+  --color-light-500: #f5f5f5;
   --color-light-900: #c3c1c7;
 
   // dark

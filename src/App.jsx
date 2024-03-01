@@ -11,7 +11,7 @@ export function App() {
 
   return (
     <div className="app">
-      <h1>TaskTestValantis</h1>
+      <h1 className="title">TaskTestValantis</h1>
       <Filter />
       <Products products={data} isLoading={isLoading} />
       <Pagination isMore={data?.length > 40} isLoading={isLoading} />

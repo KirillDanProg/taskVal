@@ -9,9 +9,12 @@
   justify-content: start;
 
   .card {
+    position: relative;
+
     display: flex;
     flex: 1;
     flex-direction: column;
+    align-self: stretch;
     justify-content: space-between;
 
     min-width: 300px;
@@ -21,10 +24,26 @@
 
     color: var(--color-dark-900);
 
-    background: var(--color-light-100);
-    border: 2px solid var(--color-accent-300);
+    background: var(--color-light-500);
     border-radius: 10px;
     box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(250 241 241 / 24%);
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -6px);
+
+      width: 100%;
+      height: 50%;
+
+      background: linear-gradient(144deg, #dfbd59 0, #e6cf72 32.29%, #ebdc89 68.23%, #d8b55b 100%);
+      background-attachment: fixed;
+      border-radius: inherit;
+    }
 
     .cardFooter {
       display: flex;

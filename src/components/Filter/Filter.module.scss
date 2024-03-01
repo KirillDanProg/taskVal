@@ -20,7 +20,7 @@
 
     font-size: var(--font-size-s);
     font-weight: var(--font-weight-bold);
-    color: var(--color-light-900);
+    color: var(--color-dark-900);
 
     transition: color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
   }
@@ -34,7 +34,7 @@
     font-size: var(--font-size-m);
     color: var(--color-dark-500);
 
-    border: 2px solid var(--color-accent-700);
+    border: 2px solid var(--color-accent-300);
     border-radius: 0.5rem;
 
     transition: border-color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
@@ -42,7 +42,6 @@
 
     &:hover,
     &:focus {
-      border-color: var(--color-accent-100);
       outline: none;
     }
   }

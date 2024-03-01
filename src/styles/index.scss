@@ -5,6 +5,8 @@
 
 @use "mixins" as *;
 
+@import "https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap";
+
 .app {
   @include sm-up {
     width: 90%;
@@ -21,4 +23,8 @@
   padding: 10px;
 
   font-family: var(--font-family-primary);
+
+  .title {
+    color: var(--color-accent-300);
+  }
 }
