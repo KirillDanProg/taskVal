@@ -12,30 +12,37 @@ export const productsApi = createApi({
   tagTypes: ["Products"],
   endpoints: build => ({
     getEntitiesByAction: build.mutation({
-      query: ({ action, params }) => ({
-        url: "/",
-        method: "POST",
-        body: {
-          action,
-          params,
-        },
-      }),
-      transformErrorResponse: responseError => responseError.data,
-      transformResponse: (response, meta, args) => {
-        if (args.action === "get_ids") {
-          return [...new Set(response.result)];
+      async queryFn({ action, params }, queryApi, extraOptions, baseQuery) {
+        const offset = params.offset;
+        if (action === "filter") {
+          delete params.offset; // delete offset from arg before "filter" request
         }
-        if (args.action === "get_items") {
+        const { data, error } = await baseQuery({
+          url: "/",
+          method: "POST",
+          body: { action, params },
+        });
+        if (error) {
+          return { error: error.data };
+        }
+        let result = data?.result;
+        if (action === "filter" && result.length > 50) {
+          result = [...new Set(result.slice(offset, offset + 50))]; // Implemented custom pagination with limit cause server doesn't support limit for filter action
+        }
+        if (action === "get_ids") {
+          result = [...new Set(result)];
+        }
+        if (action === "get_items") {
           const existingIds = [];
-          return response.result.filter(product => {
+          result = result.filter(product => {
             if (!existingIds.includes(product.id)) {
               existingIds.push(product.id);
               return true;
             }
             return null;
-          });
+          }); // transform response: skiped items with id duplicates
         }
-        return response.result;
+        return { data: result };
       },
     }),
     getFields: build.mutation({
