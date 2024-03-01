@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "http://api.valantis.store:40000"
+      "dest": "http://api.valantis.store:40000/$1"
     }
   ]
 }
