@@ -18,7 +18,7 @@ export function FilterSelect() {
       const filteredBrands = [...new Set(brands?.filter(value => value !== null))];
       setFields(filteredBrands);
     })();
-  }, [error]); //getting all brands for select
+  }, [error]); //getting all brands for select *NOT PRODUCTION VARIANT, JUST FOR CONVINIENT USAGE*
 
   const onBrandChange = e => {
     const value = e.target.value;
