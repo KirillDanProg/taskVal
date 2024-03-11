@@ -1,25 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  offset: 0,
+  limit: 50,
+  product: "",
+  brand: "",
+  price: 0,
+};
+
 export const filterSlice = createSlice({
   initialState: {
-    params: {
-      offset: 0,
-      limit: 50,
-      product: "",
-      brand: "",
-      price: 0,
-    },
+    params: initialState,
   },
   name: "filter",
   reducers: {
     resetFilters: state => {
-      state.params = {
-        offset: 0,
-        limit: 50,
-        product: "",
-        brand: undefined,
-        price: undefined,
-      };
+      state.params = initialState;
     },
     setOffset: (state, action) => {
       state.params.offset = action.payload;
